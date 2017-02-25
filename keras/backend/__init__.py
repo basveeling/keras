@@ -31,7 +31,7 @@ if os.path.exists(_config_path):
     _epsilon = _config.get('epsilon', epsilon())
     assert isinstance(_epsilon, float)
     _backend = _config.get('backend', _BACKEND)
-    assert _backend in {'theano', 'tensorflow'}
+    assert _backend in {'theano', 'tensorflow', 'pytorch'}
     _image_data_format = _config.get('image_data_format',
                                      image_data_format())
     assert _image_data_format in {'channels_last', 'channels_first'}
@@ -59,6 +59,9 @@ if 'KERAS_BACKEND' in os.environ:
 if _BACKEND == 'theano':
     sys.stderr.write('Using Theano backend.\n')
     from .theano_backend import *
+elif _BACKEND == 'pytorch':
+    sys.stderr.write('Using PyTorch backend.\n')
+    from .pytorch_backend import *
 elif _BACKEND == 'tensorflow':
     sys.stderr.write('Using TensorFlow backend.\n')
     from .tensorflow_backend import *
